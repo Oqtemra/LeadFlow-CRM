@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f6f7fb"><title>LeadFlow — CRM workspace</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">L<span>↗</span></div><div><strong>leadflow<span class="brand-dot">.</span></strong><small>CRM workspace</small></div></div>
+      <div class="side-label">РАБОЧЕЕ ПРОСТРАНСТВО</div>
+      <nav class="nav" aria-label="Разделы">
+        <button data-view="overview" class="nav-link active"><span class="nav-icon">▦</span> Обзор <span class="nav-arrow">›</span></button>
+        <button data-view="deals" class="nav-link"><span class="nav-icon">▤</span> Сделки <span class="nav-count" id="navCount">12</span></button>
+        <button data-view="analytics" class="nav-link"><span class="nav-icon">▥</span> Аналитика</button>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-note"><div class="note-badge">✦</div><strong>Все заявки под контролем</strong><p>От первого контакта до закрытой сделки.</p><button id="sidebarCreate">+ Добавить заявку</button></div>
+      <div class="side-foot"><div class="avatar">LF</div><div><strong>Демо-профиль</strong><small>Локальная версия</small></div><span class="green-dot"></span></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div class="breadcrumb">Рабочее пространство <span> / </span> <strong id="crumb">Обзор</strong></div><div class="top-actions"><span class="today" id="dateLabel"></span><span class="top-avatar">LF</span></div></header>
+      <div class="content">
+        <div class="hero"><div><div class="eyebrow"><span class="eyebrow-dot"></span> ОБЗОР ПРОДАЖ</div><h1 id="pageTitle">Управляйте сделками.<br><em>Растите быстрее.</em></h1><p id="pageSubtitle">Вся работа с клиентами в одном месте. Без лишних таблиц и хаоса.</p></div><button class="primary" id="addLead"><span>＋</span> Новая сделка</button></div>
+        <section class="kpis" id="kpiSection" aria-label="Показатели">
+          <div class="kpi"><div class="kpi-top">Активный портфель <span class="kpi-icon purple">◈</span></div><div class="kpi-value" id="kpiPipeline">...</div><div class="kpi-bottom"><span class="trend up">↗</span> Сумма открытых сделок</div></div>
+          <div class="kpi"><div class="kpi-top">В работе <span class="kpi-icon blue">▤</span></div><div class="kpi-value" id="kpiActive">...</div><div class="kpi-bottom"><span class="trend">●</span> Активных заявок</div></div>
+          <div class="kpi"><div class="kpi-top">Конверсия <span class="kpi-icon orange">◎</span></div><div class="kpi-value" id="kpiConversion">...</div><div class="kpi-bottom"><span class="trend up">↗</span> Доля выигранных сделок</div></div>
+          <div class="kpi"><div class="kpi-top">Закрыто успешно <span class="kpi-icon green">✓</span></div><div class="kpi-value" id="kpiWon">...</div><div class="kpi-bottom"><span class="trend up">↗</span> Общая сумма побед</div></div>
+        </section>
+        <section class="panel board-panel" id="boardSection"><div class="section-head"><div><div class="section-eyebrow">ВАША ВОРОНКА</div><h2>Доска сделок <span class="heading-pill" id="totalCount">12</span></h2><p>Перетаскивайте карточки между этапами или откройте для редактирования.</p></div><div class="section-controls"><div class="search"><span>⌕</span><input id="searchInput" placeholder="Поиск по сделкам" aria-label="Поиск по сделкам"></div><button class="outline" id="exportBtn">↓ Экспорт CSV</button></div></div><div class="kanban" id="kanban"></div><div class="empty hidden" id="emptyState">Ничего не найдено. Попробуйте изменить запрос.</div></section>
+        <section class="lower-grid" id="lowerSection"><div class="panel insights"><div class="panel-head"><div><div class="section-eyebrow">АНАЛИТИКА</div><h2>Распределение по этапам</h2></div><span class="muted-mini">Все сделки</span></div><div id="stageBars" class="stage-bars"></div></div><div class="panel activity"><div class="panel-head"><div><div class="section-eyebrow">ИСТОРИЯ</div><h2>Последняя активность</h2></div><span class="live-tag"><i></i> Обновляется</span></div><div id="activityList" class="activity-list"></div></div></section>
+        <footer>LeadFlow / Demo environment <span>Создано для демонстрации навыков разработки</span></footer>
+      </div>
+    </main>
+  </div>
+  <div class="modal-backdrop hidden" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-head"><div><div class="section-eyebrow">УПРАВЛЕНИЕ СДЕЛКОЙ</div><h2 id="modalTitle">Новая сделка</h2></div><button class="close" id="closeModal" aria-label="Закрыть">×</button></div><form id="leadForm"><div class="field"><label for="company">Компания / проект</label><input required minlength="2" maxlength="90" id="company" name="company" placeholder="Например, Nova Studio"></div><div class="fields-2"><div class="field"><label for="contact">Контакт</label><input required minlength="2" maxlength="90" id="contact" name="contact" placeholder="Имя клиента"></div><div class="field"><label for="amount">Бюджет, ₸</label><input required min="0" max="100000000" type="number" id="amount" name="amount" placeholder="150000"></div></div><div class="field"><label for="service">Услуга</label><input required minlength="2" maxlength="100" id="service" name="service" placeholder="Например, WhatsApp-бот"></div><div class="field"><label for="stage">Этап</label><select id="stage" name="stage"><option value="new">Новая</option><option value="contact">На связи</option><option value="proposal">Предложение</option><option value="negotiation">Переговоры</option><option value="won">Выиграно</option></select></div><div class="field"><label for="note">Комментарий <span class="optional">необязательно</span></label><textarea id="note" name="note" maxlength="500" rows="3" placeholder="Что важно помнить о клиенте"></textarea></div><div class="form-error hidden" id="formError"></div><div class="modal-actions"><button type="button" class="danger hidden" id="deleteLead">Удалить</button><span class="modal-spacer"></span><button type="button" class="outline" id="cancelModal">Отмена</button><button type="submit" class="primary" id="saveLead">Сохранить</button></div></form></div></div>
+  <div class="toast hidden" id="toast" role="status"></div>
+  <script src="/static/app.js" defer></script>
+</body></html>
